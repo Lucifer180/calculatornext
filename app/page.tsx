@@ -2,13 +2,15 @@
 import { useState } from "react";
 export default function Home() {
   const [result,setResult]=useState('');
-  const [expression,setExpression]:any=useState();
-  const handleButtonClick=(value:any)=>{
+  const [expression,setExpression]=useState('');
+  
+  const handleButtonClick=(value:string)=>{
     if(value==='='){
       try{
         setResult(eval(expression).toString())
-      }catch(e){
-          setResult("Error");
+      }catch(error:any){
+          setResult(error);
+
       }
     }
     else if(value==='C'){
@@ -16,7 +18,7 @@ export default function Home() {
       setExpression('');
     }
     else{
-      setExpression((prevExpression:any)=>prevExpression+value);
+      setExpression((prevExpression)=>prevExpression+value);
     }
   }
   const buttons=[
@@ -28,10 +30,10 @@ export default function Home() {
 
   ]
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
+    <form className="flex min-h-screen flex-col items-center p-24">
       <h1 className="text-4xl font-bold mb-10 ">Calculator</h1>
       <div className="bg-white p-6 rounded-lg shadow-lg" >
-        <input type="text" className="w-full mb-2 text-3xl border-b-2 border-gray-400 focus-outline-none" value={expression}/>
+      <label htmlFor="">  <input type="text" className="w-full mb-2 text-3xl border-b-2 border-gray-400 focus-outline-none" value={expression}/></label>
         <input type="text" className="w-full text-4xl font-bold focus-outline border-b-2 focus-outline-none border-gray-400"
         value={result} 
         readOnly/>
@@ -44,6 +46,6 @@ export default function Home() {
         </div>
       </div>
        
-    </main>
+    </form>
   );
 }
